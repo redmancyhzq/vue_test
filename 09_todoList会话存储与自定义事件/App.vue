@@ -2,9 +2,9 @@
   <div id="root">
     <div class="todo-container">
       <div class="todo-wrap">
-        <Header :receive="receive"/>
+        <Header @receive="receive"/>
         <List :todoList="todoList" :changeDone="changeDone" :deleteTodo="deleteTodo"/>
-        <Footer :todoList="todoList" :handleCheck="handleCheck" :handleDelete="handleDelete" />
+        <Footer :todoList="todoList" @handleCheck="handleCheck" @handleDelete="handleDelete" />
       </div>
     </div>
   </div>
@@ -17,13 +17,9 @@ import Footer from "./components/Footer";
 export default {
   data() {
     return {
-      todoList: [
-        { id: "001", title: "唱", done: true },
-        { id: "002", title: "跳", done: false },
-        { id: "003", title: "rap", done: true },
-        { id: "004", title: "打篮球", done: true },
-      ],
-    };
+      //读取最新的todoObj,进行展示
+      todoList: JSON.parse(sessionStorage.getItem('todoObj')) || []
+    }
   },
   components: {
     Header,
@@ -61,6 +57,17 @@ export default {
       this.todoList = this.todoList.filter((todoObj) => {
         return !todoObj.done
       })
+    }
+  },
+  watch: {
+    //给todoList进行会话存储
+    todoList: {
+      //开启深度监视
+      deep: true,
+      handler(todoObj) {
+        //保存数据,setItem,形式为键值对
+        sessionStorage.setItem('todoObj',JSON.stringify(todoObj))
+      }
     }
   }
 };

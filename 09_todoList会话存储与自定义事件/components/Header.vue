@@ -16,7 +16,7 @@ export default {
       value: "",
     };
   },
-  props: ["receive"],
+  //props: ["receive"],
   methods: {
     addTodoObj() {
       //校验数据
@@ -26,7 +26,10 @@ export default {
       //将header组件用户的输入封装成一个todoObj对象
       const todoObj = { id: nanoid(), title: this.value, done: false };
       //让App接收用户输入的数据
-      this.receive(todoObj);
+
+      //this.receive(todoObj);
+      //触发事件,第一个参数为事件名
+      this.$emit('receive',todoObj)
       this.value = "";
     },
   },

@@ -13,7 +13,8 @@ export default {
   data() {
     return {};
   },
-  props:['todoList','handleCheck','handleDelete'],
+  //props:['todoList','handleCheck','handleDelete'],
+  props:['todoList'],
   computed: {
     doneTotal() {
       //   let i = 0
@@ -44,7 +45,7 @@ export default {
         return this.handleAll === this.doneTotal && this.handleAll > 0
       },
       set(checked) {
-        this.handleCheck(checked) 
+        this.$emit('handleCheck',checked)
       }
       
     }
@@ -62,7 +63,7 @@ export default {
     //   this.deleteDone(e.target.checked)
     // },
     handleDone() {
-      this.handleDelete()
+      this.$emit('handleDelete')
     }
     
   }
