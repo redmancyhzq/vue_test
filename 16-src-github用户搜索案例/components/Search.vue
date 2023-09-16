@@ -25,13 +25,27 @@ export default {
   },
   methods: {
     handleSearch() {
+          this.$bus.$emit('updateUser',
+            { isFirstShow: false,
+              isLoading: true,
+              users: [],
+              errMsg: "",
+            })
       axios.get(`https://api.github.com/search/users?q=${this.keyWords}`).then(
         response => {
           console.log('请求成功了');
-          this.$bus.$emit('getUser',response.data.items)
+          this.$bus.$emit('updateUser',
+            { isLoading: false,
+              users: response.data.items ,
+              errMsg: "",
+            })
         },
         error => {
-          console.log('请求失败了',error.message);
+          this.$bus.$emit('updateUser',
+            { isLoading: false,
+              users: [],
+              errMsg: error.message,
+            })
         }
       )
     }
