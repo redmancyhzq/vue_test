@@ -13,12 +13,11 @@ export default new VueRouter({
       component: Home,
       children:[
         {
-          name: 'xiaoxi',
           path:'message',
           component: Message,
           children:[
             {
-              path:'detail/:id/:title',
+              path:'detail',
               component: Detail
             }
           ]
